@@ -56,7 +56,7 @@ class TextCompletionAPI extends APIBase {
 
         Logger.log(`Using endpoint: Text Completions`)
         this.readableStreamResponse(
-            new URL('/v1/completions', endpoint).toString(),
+            new URL('v1/completions', endpoint).toString(),
             JSON.stringify(this.buildPayload()),
             (item) => {
                 const output = JSON.parse(item)

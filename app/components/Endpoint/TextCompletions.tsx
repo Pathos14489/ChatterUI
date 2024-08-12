@@ -26,7 +26,7 @@ const TextCompletions = () => {
         if (!endpoint) return
 
         try {
-            const url = new URL('/v1/models', endpoint).toString()
+            const url = new URL('v1/models', endpoint).toString()
             const response = await fetch(url, {
                 headers: { accept: 'application/json', Authorization: `Bearer ${completionsKey}` },
             })
