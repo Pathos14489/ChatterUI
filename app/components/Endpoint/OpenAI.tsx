@@ -8,7 +8,6 @@ import { useMMKVObject, useMMKVString } from 'react-native-mmkv'
 export type OpenAIModel = {
     id: string
     object: string
-    created: number
     owned_by: string
 }
 
@@ -109,7 +108,6 @@ const OpenAI = () => {
                         <View>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Id</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Object</Text>
-                            <Text style={{ color: Style.getColor('primary-text2') }}>Created</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Owned By</Text>
                         </View>
                         <View style={{ marginLeft: 8 }}>
@@ -118,9 +116,6 @@ const OpenAI = () => {
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {openAIModel.object}
-                            </Text>
-                            <Text style={{ color: Style.getColor('primary-text2') }}>
-                                : {openAIModel.created}
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {openAIModel.owned_by}

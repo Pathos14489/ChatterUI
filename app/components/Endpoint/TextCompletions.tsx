@@ -35,6 +35,7 @@ const TextCompletions = () => {
                 return
             }
             const { data } = await response.json()
+            Logger.log('Model list:'+JSON.stringify(data))
             setModelList(data)
         } catch (e) {
             setModelList([])
