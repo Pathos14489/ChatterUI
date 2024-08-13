@@ -137,7 +137,6 @@ const ChatCompletions = () => {
                         <View>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Id</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Object</Text>
-                            <Text style={{ color: Style.getColor('primary-text2') }}>Created</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Owned By</Text>
                         </View>
                         <View style={{ marginLeft: 8 }}>
@@ -146,9 +145,6 @@ const ChatCompletions = () => {
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {chatCompletionsModel.object}
-                            </Text>
-                            <Text style={{ color: Style.getColor('primary-text2') }}>
-                                : {chatCompletionsModel.created}
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {chatCompletionsModel.owned_by}

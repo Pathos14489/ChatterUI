@@ -28,12 +28,16 @@ const TextCompletions = () => {
         try {
             const url = new URL('v1/models', endpoint).toString()
             const response = await fetch(url, {
-                headers: { accept: 'application/json', Authorization: `Bearer ${completionsKey}` },
+                headers: {
+                    accept: 'application/json',
+                    Authorization: `Bearer ${completionsKey}`
+                },
             })
             if (response.status !== 200) {
                 Logger.log(`Error with response: ${response.status}`, true)
                 return
             }
+            Logger.log('data:'+JSON.stringify(response))
             const { data } = await response.json()
             Logger.log('Model list:'+JSON.stringify(data))
             setModelList(data)
@@ -128,7 +132,6 @@ const TextCompletions = () => {
                         <View>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Id</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Object</Text>
-                            <Text style={{ color: Style.getColor('primary-text2') }}>Created</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Owned By</Text>
                         </View>
                         <View style={{ marginLeft: 8 }}>
@@ -137,9 +140,6 @@ const TextCompletions = () => {
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {completionsModel.object}
-                            </Text>
-                            <Text style={{ color: Style.getColor('primary-text2') }}>
-                                : {completionsModel.created}
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {completionsModel.owned_by}
