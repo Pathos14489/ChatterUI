@@ -23,27 +23,20 @@ const TextCompletions = () => {
     }, [])
 
     const getModelList = async () => {
-        if (!endpoint) return
-
-        try {
-            const url = new URL('v1/models', endpoint).toString()
-            const response = await fetch(url, {
-                headers: {
-                    accept: 'application/json',
-                    Authorization: `Bearer ${completionsKey}`
-                },
+        const url = new URL('v1/models', endpoint).toString()
+        Logger.log('URL:'+url)
+        const modelresults = await fetch(url, {
+            method: 'GET',
+            headers: { accept: 'application/json' },
+        })
+            .then(async (modelresults) => {
+                const list = (await modelresults.json()).data
+                setModelList(list)
             })
-            if (response.status !== 200) {
-                Logger.log(`Error with response: ${response.status}`, true)
-                return
-            }
-            Logger.log('data:'+JSON.stringify(response))
-            const { data } = await response.json()
-            Logger.log('Model list:'+JSON.stringify(data))
-            setModelList(data)
-        } catch (e) {
-            setModelList([])
-        }
+            .catch(() => {
+                Logger.log(`Could not get TextCompletion Mddels`, true)
+                setModelList([])
+            })
     }
 
     return (
