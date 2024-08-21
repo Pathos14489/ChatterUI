@@ -30,11 +30,12 @@ const TextCompletions = () => {
             headers: { accept: 'application/json' },
         })
             .then(async (modelresults) => {
-                const list = (await modelresults.json()).data
+                var list = (await modelresults.json())
+                if (list.data) list = list.data // OpenAI
                 setModelList(list)
             })
             .catch(() => {
-                Logger.log(`Could not get TextCompletion Mddels`, true)
+                Logger.log(`Could not get TextCompletion Models`, true)
                 setModelList([])
             })
     }
