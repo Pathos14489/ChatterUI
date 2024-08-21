@@ -127,6 +127,8 @@ const TextCompletions = () => {
                             <Text style={{ color: Style.getColor('primary-text2') }}>Id</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Object</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Owned By</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Permissions</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Currently Loaded</Text>
                         </View>
                         <View style={{ marginLeft: 8 }}>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
@@ -137,6 +139,12 @@ const TextCompletions = () => {
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {completionsModel.owned_by}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {completionsModel.permissions.join(', ')}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {completionsModel.currently_loaded ? 'Yes' : 'No'}
                             </Text>
                         </View>
                     </View>
