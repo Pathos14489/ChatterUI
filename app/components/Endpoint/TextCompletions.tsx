@@ -128,7 +128,8 @@ const TextCompletions = () => {
                             <Text style={{ color: Style.getColor('primary-text2') }}>Object</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Owned By</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Permissions</Text>
-                            <Text style={{ color: Style.getColor('primary-text2') }}>Modalities</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Input Modalities</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Output Modalities</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Priority</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Currently Loaded</Text>
                         </View>
@@ -146,7 +147,10 @@ const TextCompletions = () => {
                                 : {completionsModel.permissions.join(', ')}
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
-                                : {completionsModel.modalities.join(', ')}
+                                : {openAIModel.input_modalities.join(', ')}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {openAIModel.output_modalities.join(', ')}
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {completionsModel.priority}
