@@ -10,6 +10,8 @@ export type OpenAIModel = {
     object: string
     owned_by: string
     permissions: string[]
+    modalities: string[]
+    priority: number
     currently_loaded: boolean
 }
 
@@ -112,6 +114,8 @@ const OpenAI = () => {
                             <Text style={{ color: Style.getColor('primary-text2') }}>Object</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Owned By</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Permissions</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Modalities</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Priority</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Currently Loaded</Text>
                         </View>
                         <View style={{ marginLeft: 8 }}>
@@ -126,6 +130,12 @@ const OpenAI = () => {
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {openAIModel.permissions.join(', ')}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {openAIModel.modalities.join(', ')}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {openAIModel.priority}
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {openAIModel.currently_loaded ? 'Yes' : 'No'}
