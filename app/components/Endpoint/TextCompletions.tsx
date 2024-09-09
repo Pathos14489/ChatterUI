@@ -31,7 +31,7 @@ const TextCompletions = () => {
         })
             .then(async (modelresults) => {
                 var list = (await modelresults.json())
-                if (list.data) list = list.data // OpenAI
+                if (list.data) list = list.data // OpenAI/OpenRouter format
                 setModelList(list)
             })
             .catch(() => {
