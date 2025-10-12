@@ -1,9 +1,10 @@
 import { Characters, Logger } from '@globals'
 import { useRouter, Stack, usePathname } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView } from 'react-native'
+import { SafeAreaView, ScrollView, TextInput, View, StyleSheet } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { runOnJS } from 'react-native-reanimated'
+import { Style } from '@globals'
 
 import CharacterListing from './CharacterListing'
 import CharacterNewMenu from './CharacterNewMenu'
@@ -21,6 +22,7 @@ const CharacterList = () => {
 
     const [characterList, setCharacterList] = useState<CharInfo[]>([])
     const [nowLoading, setNowLoading] = useState(false)
+    const [searchText, setSearchText] = useState('')
 
     const goBack = () => router.back()
 
@@ -38,6 +40,12 @@ const CharacterList = () => {
             Logger.log(`Could not retrieve characters.\n${error}`, true)
         }
     }
+
+    const filteredCharacters = characterList.filter(
+        c =>
+            c.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            c.tags.some(tag => tag.toLowerCase().includes(searchText.toLowerCase()))
+    )
 
     useEffect(() => {
         getCharacterList()
@@ -58,12 +66,24 @@ const CharacterList = () => {
                         ),
                     }}
                 />
-
-                {characterList.length === 0 && <CharactersEmpty />}
-
-                {characterList.length !== 0 && (
+                {/* Search Bar */}
+                <View style={styles.searchBox}>
+                    <TextInput
+                        placeholder="Search characters..."
+                    style={styles.searchInput}
+                    value={searchText}
+                    onChangeText={setSearchText}
+                    />
+                    <FontAwesome
+                        name="search"
+                        size={15}
+                        color={Style.getColor('primary-text1')}
+                    />
+                </View>
+                {filteredCharacters.length === 0 && <CharactersEmpty />}
+                {filteredCharacters.length !== 0 && (
                     <ScrollView>
-                        {characterList.map((character, index) => (
+                        {filteredCharacters.reverse().map((character, index) => (
                             <CharacterListing
                                 key={character.id}
                                 index={index}
@@ -78,5 +98,22 @@ const CharacterList = () => {
         </GestureDetector>
     )
 }
+
+const styles = StyleSheet.create({
+    searchBox: {
+        flex: 1,
+        borderRadius: 16,
+        backgroundColor: Style.getColor('primary-surface2'),
+        padding: 8,
+        color: Style.getColor('primary-text1'),
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    searchInput: {
+        flex: 1,
+        color: Style.getColor('primary-text1'),
+    }
+})
 
 export default CharacterList
