@@ -33,7 +33,7 @@ const About = () => {
             <TouchableOpacity activeOpacity={0.8} onPress={updateCounter}>
                 <Image source={require('../assets/images/icon.png')} style={styles.icon} />
             </TouchableOpacity>
-            <Text style={styles.titleText}>ChatterUI</Text>
+            <Text style={styles.titleText}>ChatterUIP+</Text>
             <Text style={styles.subtitleText}>
                 Version {version} {devMode && '[DEV MODE]'}
             </Text>
@@ -53,13 +53,19 @@ const About = () => {
                 </TouchableOpacity>
             )}
             <Text style={styles.body}>
-                ChatterUI is a free and open-source application developed by Vali98
+                ChatterUI is a free and open-source application developed by Vali98.
+            </Text>
+            <Text style={styles.body}>
+                ChatterUIP+ is forked from ChatterUI and maintained by Pathos
             </Text>
             <Text style={{ marginBottom: 20, ...styles.body }}>
-                This app is a passion project I develop in my free time. If you're enjoying the app,
+                VAli-98: This app is a passion project I develop in my free time. If you're enjoying the app,
                 consider supporting its development!
             </Text>
-            <Text style={{ ...styles.body, marginBottom: 8 }}>Donate to ChatterUI here:</Text>
+            <Text style={{ marginBottom: 20, ...styles.body }}>
+                Pathos: Forked to add more features and fix bugs. Made it tailored to my personal API and redesigned the prompt processing a bit. I'unno, not really meant for other people to use, but hey, if you want to try it out, go ahead.
+            </Text>
+            {/* <Text style={{ ...styles.body, marginBottom: 8 }}>Donate to ChatterUI here:</Text>
             <SupportButton />
             <Text style={styles.body}>Got an issue? Report it here:</Text>
 
@@ -71,7 +77,7 @@ const About = () => {
                 style={styles.supportButton}>
                 <Text style={styles.supportText}>Github Repository</Text>
                 <FontAwesome name="github" size={20} color={Style.getColor('primary-text1')} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     )
 }

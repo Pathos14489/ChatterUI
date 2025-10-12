@@ -1,8 +1,8 @@
 {
     "expo": {
-        "name": "ChatterUI",
+        "name": "ChatterUIP+",
         "slug": "ChatterUI",
-        "version": "0.7.9",
+        "version": "0.7.11",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
         "scheme": "chatterui",
@@ -23,7 +23,7 @@
                 "monochromeImage": "./assets/images/adaptive-icon-foreground.png",
                 "backgroundColor": "#000"
             },
-            "package": "com.Vali98.ChatterUI",
+            "package": "com.Pathos.ChatterUIP",
             "splash": {
                 "image": "./assets/images/splash.png",
                 "resizeMode": "contain",
@@ -65,7 +65,7 @@
                         "enableProguardInReleaseBuilds": true,
                         "enableShrinkResourcesInReleaseBuilds": true,
                         "useLegacyPackaging": true,
-                        "extraProguardRules": "-keep class com.rnllama.** { *; }"
+                        "extraProguardRules": "-keep class com.rnllama.** { *; }",
                     }
                 }
             ],
