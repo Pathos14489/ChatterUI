@@ -19,7 +19,7 @@ class ClaudeAPI extends APIBase {
         const length = payloadFields?.['max_context_length']
         delete payloadFields?.max_context_length
         const claudeModel = this.getObject(Global.ClaudeModel)
-        const messages = this.buildChatCompletionContext(typeof length === 'number' ? length : 0)
+        const messages = this.buildChatCompletionContext(typeof length === 'number' ? length : 0).messages
         const firstMes = this.getString(Global.ClaudeFirstMessage)
         const prefill = this.getString(Global.ClaudePrefill)
         const system = messages[0]

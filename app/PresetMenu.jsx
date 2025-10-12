@@ -82,6 +82,33 @@ const PresetMenu = () => {
             type: SLIDER,
             data: { name: 'Presence Penalty', precision: 2, min: -2, max: 2 },
         },
+        
+        xtc_probability: {
+            type: SLIDER,
+            data: { name: 'XTC Probability', precision: 2, min: 0, max: 1 },
+        },
+        xtc_threshold: {
+            type: SLIDER,
+            data: { name: 'XTC Threshold', precision: 2, min: 0, max: 1 },
+        },
+        dry_multiplier: {
+            type: SLIDER,
+            data: { name: 'DRY Multiplier', precision: 2, min: 0, max: 5 },
+        },
+        dry_allowed_length: {
+            type: SLIDER,
+            data: { name: 'DRY Allowed Length', min: 0, max: 8196 },
+        },
+        dry_base: {
+            type: SLIDER,
+            data: { name: 'DRY Base', precision: 2, min: 1, max: 5 },
+        },
+        dry_penalty_last_n: {
+            type: SLIDER,
+            data: { name: 'DRY Penalty Last N', min: -1, max: 8196 },
+        },
+        dry_seq_breakers: { type: TEXTBOX, data: { name: 'DRY Seq Breakers', lines: 3 } },
+
         no_repeat_ngram_size: {
             type: SLIDER,
             data: { name: 'No Repeat Ngram Size', min: 0, max: 20 },

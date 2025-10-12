@@ -31,7 +31,7 @@ class CohereAPI extends APIBase {
             'SYSTEM',
             'USER',
             'CHATBOT'
-        ).map((item) => ({ role: item.role, message: item.content }))
+        ).messages.map((item) => ({ role: item.role, message: item.content }))
         const last = chat_history.pop()
 
         if (payloadFields?.['seed'] === -1) delete payloadFields?.['seed']

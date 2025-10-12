@@ -29,7 +29,7 @@ class OpenRouterAPI extends APIBase {
             stream: true,
             messages: this.buildChatCompletionContext(
                 Math.min(length, openRouterModel.context_length)
-            ),
+            ).messages,
             stop: this.constructStopSequence(),
         }
     }

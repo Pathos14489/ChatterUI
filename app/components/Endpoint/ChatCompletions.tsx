@@ -30,11 +30,12 @@ const ChatCompletions = () => {
             headers: { accept: 'application/json' },
         })
             .then(async (modelresults) => {
-                const list = (await modelresults.json()).data
+                var list = (await modelresults.json())
+                if (list.data) list = list.data // OpenAI/OpenRouter format
                 setModelList(list)
             })
             .catch(() => {
-                Logger.log(`Could not get ChatCompletion Mddels`, true)
+                Logger.log(`Could not get ChatCompletion Models`, true)
                 setModelList([])
             })
     }
@@ -132,6 +133,12 @@ const ChatCompletions = () => {
                             <Text style={{ color: Style.getColor('primary-text2') }}>Id</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Object</Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>Owned By</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Permissions</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Input Modalities</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Output Modalities</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Context Length</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Priority</Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>Currently Loaded</Text>
                         </View>
                         <View style={{ marginLeft: 8 }}>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
@@ -142,6 +149,24 @@ const ChatCompletions = () => {
                             </Text>
                             <Text style={{ color: Style.getColor('primary-text2') }}>
                                 : {chatCompletionsModel.owned_by}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {chatCompletionsModel.permissions.join(', ')}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {chatCompletionsModel.input_modalities.join(', ')}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {chatCompletionsModel.output_modalities.join(', ')}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {chatCompletionsModel.n_ctx}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {chatCompletionsModel.priority}
+                            </Text>
+                            <Text style={{ color: Style.getColor('primary-text2') }}>
+                                : {chatCompletionsModel.currently_loaded ? 'Yes' : 'No'}
                             </Text>
                         </View>
                     </View>

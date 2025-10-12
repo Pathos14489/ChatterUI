@@ -12,8 +12,10 @@ export type OpenAIModel = {
     permissions: string[]
     input_modalities: string[]
     output_modalities: string[]
+    n_ctx: number
     priority: number
     currently_loaded: boolean
+    prompt_styles: object
 }
 
 const OpenAI = () => {

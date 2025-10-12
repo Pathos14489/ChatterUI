@@ -10,33 +10,36 @@ class TextCompletionAPI extends APIBase {
         { externalName: 'max_context_length', samplerID: SamplerID.CONTEXT_LENGTH },
         { externalName: 'max_tokens', samplerID: SamplerID.GENERATED_LENGTH },
         { externalName: 'stream', samplerID: SamplerID.STREAMING },
-        { externalName: 'rep_pen', samplerID: SamplerID.REPETITION_PENALTY },
+        
         { externalName: 'temperature', samplerID: SamplerID.TEMPERATURE },
-        { externalName: 'min_p', samplerID: SamplerID.MIN_P },
-        { externalName: 'top_a', samplerID: SamplerID.TOP_A },
         { externalName: 'top_p', samplerID: SamplerID.TOP_P },
         { externalName: 'top_k', samplerID: SamplerID.TOP_K },
-        { externalName: 'smoothing_factor', samplerID: SamplerID.SMOOTHING_FACTOR },
+        { externalName: 'min_p', samplerID: SamplerID.MIN_P },
 
-        { externalName: 'tfs', samplerID: SamplerID.TAIL_FREE_SAMPLING },
-        { externalName: 'seed', samplerID: SamplerID.SEED },
-        { externalName: 'typical', samplerID: SamplerID.TYPICAL },
-        { externalName: 'repetition_penalty', samplerID: SamplerID.REPETITION_PENALTY },
-        { externalName: 'rep_pen_range', samplerID: SamplerID.REPETITION_PENALTY_RANGE },
+        { externalName: 'tfs_z', samplerID: SamplerID.TAIL_FREE_SAMPLING },
 
-        { externalName: 'sampler_seed', samplerID: SamplerID.SEED },
+        { externalName: 'repeat_penalty', samplerID: SamplerID.REPETITION_PENALTY },
+        { externalName: 'frequency_penalty', samplerID: SamplerID.FREQUENCY_PENALTY },
+        { externalName: 'presence_penalty', samplerID: SamplerID.PRESENCE_PENALTY },
+        { externalName: 'typical_p', samplerID: SamplerID.TYPICAL },
 
         { externalName: 'mirostat', samplerID: SamplerID.MIROSTAT_MODE },
         { externalName: 'mirostat_tau', samplerID: SamplerID.MIROSTAT_TAU },
         { externalName: 'mirostat_eta', samplerID: SamplerID.MIROSTAT_ETA },
+        
+        { externalName: 'xtc_probability', samplerID: SamplerID.XTC_PROBABILITY },
+        { externalName: 'xtc_threshold', samplerID: SamplerID.XTC_THRESHOLD },
+        
+        { externalName: 'dry_multiplier', samplerID: SamplerID.DRY_MULTIPLIER },
+        { externalName: 'dry_allowed_length', samplerID: SamplerID.DRY_ALLOWED_LENGTH },
+        { externalName: 'dry_base', samplerID: SamplerID.DRY_BASE },
+        { externalName: 'dry_penalty_last_n', samplerID: SamplerID.DRY_PENALTY_LAST_N },
+        { externalName: 'dry_seq_breakers', samplerID: SamplerID.DRY_SEQ_BREAKERS },
+        
         { externalName: 'grammar', samplerID: SamplerID.GRAMMAR_STRING },
-        { externalName: 'ignore_eos', samplerID: SamplerID.BAN_EOS_TOKEN },
-        { externalName: 'dynatemp_range', samplerID: SamplerID.DYNATEMP_RANGE },
-
-        { externalName: 'frequency_penalty', samplerID: SamplerID.FREQUENCY_PENALTY },
-        { externalName: 'presence_penalty', samplerID: SamplerID.PRESENCE_PENALTY },
-        { externalName: 'skip_special_tokens', samplerID: SamplerID.SKIP_SPECIAL_TOKENS },
+        { externalName: 'seed', samplerID: SamplerID.SEED },
     ]
+
     buildPayload = () => {
         const payloadFields = this.getSamplerFields()
         const length = payloadFields?.['max_context_length']
@@ -45,9 +48,8 @@ class TextCompletionAPI extends APIBase {
         return {
             ...payloadFields,
             model: model.id,
-            samplerOrder: [6, 0, 1, 3, 4, 2, 5],
             prompt: this.buildTextCompletionContext(typeof length === 'number' ? length : 0),
-            stop_sequence: this.constructStopSequence(),
+            stop: this.constructStopSequence(),
         }
     }
     inference = async () => {
@@ -60,6 +62,7 @@ class TextCompletionAPI extends APIBase {
             JSON.stringify(this.buildPayload()),
             (item) => {
                 const output = JSON.parse(item)
+                Logger.log(JSON.stringify(output))
                 return output?.choices?.[0]?.text ?? output?.content ?? ''
             },
             () => {},

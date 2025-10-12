@@ -24,7 +24,7 @@ class OpenAIAPI extends APIBase {
             ...payloadFields,
             model: openAIModel.id,
             stream: true,
-            messages: this.buildChatCompletionContext(length),
+            messages: this.buildChatCompletionContext(length).messages,
             stop: this.constructStopSequence(),
         }
     }
