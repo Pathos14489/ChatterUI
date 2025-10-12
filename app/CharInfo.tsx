@@ -34,6 +34,23 @@ const CharInfo = () => {
     const getTokenCount = Tokenizer.useTokenizer((state) => state.getTokenCount)
     const [characterCard, setCharacterCard] = useState<CharacterCardV2 | undefined>(currentCard)
 
+    function updateCharacterCard(updates: Partial<CharacterCardV2>) {
+        setCharacterCard((prev) => {
+            if (!prev) return prev
+            // Merge top-level fields and merge nested data partially
+            return {
+                ...prev,
+                // apply any top-level updates (spec, spec_version, etc.)
+                ...(updates as Partial<CharacterCardV2>),
+                // ensure we merge nested data instead of replacing it with a partial
+                data: {
+                    ...prev.data,
+                    ...(updates.data ?? {}),
+                },
+            }
+        })
+    }
+
     const imageDir = Characters.getImageDir(currentCard?.data.image_id ?? -1)
 
     const [imageSource, setImageSource] = useState({
@@ -160,7 +177,6 @@ const CharInfo = () => {
                             Description Tokens:{' '}
                             {getTokenCount(characterCard?.data?.description ?? '')}
                         </Text>
-
                         <ScrollView
                             keyboardShouldPersistTaps="handled"
                             style={styles.inputContainer}>
@@ -168,16 +184,67 @@ const CharInfo = () => {
                                 style={styles.input}
                                 multiline
                                 onChangeText={(mes) => {
-                                    setCharacterCard({
-                                        ...characterCard,
-                                        data: { ...characterCard.data, description: mes },
-                                    })
+                                    updateCharacterCard({ data: { ...characterCard.data, description: mes } })
                                 }}
                                 value={characterCard?.data?.description}
-                                numberOfLines={8}
+                                numberOfLines={16}
+                            />
+                        </ScrollView>
+                        
+                        <Text style={styles.boxText}>
+                            Personality Tokens:{' '}
+                            {getTokenCount(characterCard?.data?.personality ?? '')}
+                        </Text>
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            style={styles.inputContainer}>
+                            <TextInput
+                                style={styles.input}
+                                multiline
+                                onChangeText={(mes) => {
+                                    updateCharacterCard({ data: { ...characterCard.data, personality: mes } })
+                                }}
+                                value={characterCard?.data?.personality}
+                                numberOfLines={16}
                             />
                         </ScrollView>
 
+                        <Text style={styles.boxText}>
+                            Scenario Tokens:{' '}
+                            {getTokenCount(characterCard?.data?.scenario ?? '')}
+                        </Text>
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            style={styles.inputContainer}>
+                            <TextInput
+                                style={styles.input}
+                                multiline
+                                onChangeText={(mes) => {
+                                    updateCharacterCard({ data: { ...characterCard.data, scenario: mes } })
+                                }}
+                                value={characterCard?.data?.scenario}
+                                numberOfLines={16}
+                            />
+                        </ScrollView>
+
+                        <Text style={styles.boxText}>
+                            Post History Instructions Tokens:{' '}
+                            {getTokenCount(characterCard?.data?.post_history_instructions ?? '')}
+                        </Text>
+                        <ScrollView
+                            keyboardShouldPersistTaps="handled"
+                            style={styles.inputContainer}>
+                            <TextInput
+                                style={styles.input}
+                                multiline
+                                onChangeText={(mes) => {
+                                    updateCharacterCard({ data: { ...characterCard.data, post_history_instructions: mes } })
+                                }}
+                                value={characterCard?.data?.post_history_instructions}
+                                numberOfLines={16}
+                            />
+                        </ScrollView>
+                        
                         <Text style={styles.boxText}>First Message</Text>
                         <ScrollView
                             keyboardShouldPersistTaps="handled"
@@ -186,13 +253,10 @@ const CharInfo = () => {
                                 style={styles.input}
                                 multiline
                                 onChangeText={(mes) => {
-                                    setCharacterCard({
-                                        ...characterCard,
-                                        data: { ...characterCard.data, first_mes: mes },
-                                    })
+                                    updateCharacterCard({ data: { ...characterCard.data, first_mes: mes } })
                                 }}
                                 value={characterCard?.data?.first_mes}
-                                numberOfLines={8}
+                                numberOfLines={16}
                             />
                         </ScrollView>
                     </ScrollView>

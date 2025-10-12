@@ -21,6 +21,9 @@ import { Tokenizer } from './Tokenizer'
 type CharacterTokenCache = {
     otherName: string
     description_length: number
+    personality_length: number
+    scenario_length: number
+    post_history_instructions_length: number
     examples_length: number
 }
 
@@ -43,10 +46,10 @@ export namespace Characters {
         setCard: async (id: number) => {
             let start = performance.now()
             const card = await db.query.card(id)
-            Logger.debug(`[User] time for database query: ${performance.now() - start}`)
+            Logger.log(`[User] time for database query: ${performance.now() - start}`)
             start = performance.now()
             set((state) => ({ ...state, card: card, id: id, tokenCache: undefined }))
-            Logger.debug(`[User] time for zustand set: ${performance.now() - start}`)
+            Logger.log(`[User] time for zustand set: ${performance.now() - start}`)
             mmkv.set(Global.UserID, id)
             return card?.data.name
         },
@@ -85,6 +88,9 @@ export namespace Characters {
                 return {
                     otherName: userName,
                     description_length: 0,
+                    personality_length: 0,
+                    scenario_length: 0,
+                    post_history_instructions_length: 0,
                     examples_length: 0,
                 }
             const description = replaceMacros(card.data.description)
@@ -97,6 +103,9 @@ export namespace Characters {
             const newCache = {
                 otherName: userName,
                 description_length: getTokenCount(description),
+                personality_length: getTokenCount(card.data.personality),
+                scenario_length: getTokenCount(card.data.scenario),
+                post_history_instructions_length: getTokenCount(card.data.post_history_instructions),
                 examples_length: getTokenCount(examples),
             }
 
@@ -112,12 +121,13 @@ export namespace Characters {
         setCard: async (id: number) => {
             let start = performance.now()
             const card = await db.query.card(id)
-            Logger.debug(`[Characters] time for database query: ${performance.now() - start}`)
+            Logger.log(`[Characters] Retrieved card: `+ JSON.stringify(card))
+            Logger.log(`[Characters] time for database query: ${performance.now() - start}`)
             start = performance.now()
             set((state) => {
                 return { ...state, card: card, id: id, tokenCache: undefined }
             })
-            Logger.debug(`[Characters] time for zustand set: ${performance.now() - start}`)
+            Logger.log(`[Characters] time for zustand set: ${performance.now() - start}`)
             return card?.data.name
         },
         unloadCard: () => {
@@ -145,6 +155,9 @@ export namespace Characters {
                 return {
                     otherName: charName,
                     description_length: 0,
+                    personality_length: 0,
+                    scenario_length: 0,
+                    post_history_instructions_length: 0,
                     examples_length: 0,
                 }
             const description = replaceMacros(card.data.description)
@@ -157,6 +170,9 @@ export namespace Characters {
             const newCache = {
                 otherName: charName,
                 description_length: getTokenCount(description),
+                personality_length: getTokenCount(card.data.personality),
+                scenario_length: getTokenCount(card.data.scenario),
+                post_history_instructions_length: getTokenCount(card.data.post_history_instructions),
                 examples_length: getTokenCount(examples),
             }
             set((state) => ({ ...state, tokenCache: newCache }))
@@ -242,7 +258,7 @@ export namespace Characters {
             export const updateCard = async (card: CharacterCardV2, cardID: number) => {
                 await database
                     .update(characters)
-                    .set({ description: card.data.description, first_mes: card.data.first_mes })
+                    .set({ ...card.data })
                     .where(eq(characters.id, cardID))
             }
 
@@ -484,6 +500,30 @@ export namespace Characters {
     }
 }
 
+export type CharacterCardV2CharacterBookEntry = {
+    name: string
+    keys: string[]
+    secondary_keys: string[]
+    content: string[]
+    enabled: boolean
+    insertion_order: number
+    case_sensitive: boolean
+    priority: number
+    id: number
+    comment: string
+    selective: boolean
+    constant: boolean
+    extensions: object
+}
+export type CharacterCardV2CharacterBook = {
+    name: string
+    description: string
+    scan_depth: number
+    token_budget: number
+    recursion_scanning: boolean
+    extensions: object
+    entries: CharacterCardV2CharacterBookEntry[]
+}
 export type CharacterCardV2Data = {
     // field for chatterUI
     image_id: number
@@ -508,6 +548,7 @@ export type CharacterCardV2Data = {
     creator: string
     character_version: string
     //extensions: {},
+    character_book?: CharacterCardV2CharacterBook
 }
 
 export type CharacterCardV2 = {
@@ -540,7 +581,7 @@ const TavernCardV2 = (name: string) => {
             system_prompt: '',
             post_history_instructions: '',
             alternate_greetings: [],
-            character_book: '',
+            character_book: undefined,
 
             // May 8th additions
             tags: [],
