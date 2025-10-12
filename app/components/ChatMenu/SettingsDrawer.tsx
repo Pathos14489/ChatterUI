@@ -35,19 +35,19 @@ type ButtonData = {
 
 const paths: ButtonData[] = [
     {
-        name: 'Sampler',
+        name: 'API Settings',
+        path: '/APIMenu',
+        icon: 'link',
+    },
+    {
+        name: 'Sampler Options',
         path: '/SamplerMenu',
         icon: 'barschart',
     },
     {
-        name: 'Instruct',
+        name: 'Prompt Template',
         path: '/Instruct',
         icon: 'profile',
-    },
-    {
-        name: 'API',
-        path: '/APIMenu',
-        icon: 'link',
     },
     {
         name: 'TTS',
@@ -202,19 +202,18 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ booleans: [showModal, s
                                     <DrawerButton item={item} index={index} key={index} />
                                 )
                             )}
-
-                            <Text
-                                style={{
-                                    alignSelf: 'center',
-                                    color: Style.getColor('primary-text2'),
-                                    marginTop: 8,
-                                }}>
-                                {__DEV__ && 'DEV BUILD\t'}
-                                {devMode && 'DEV MODE\t'}
-                                {'v' + require(`../../../app.json`).expo.version}
-                            </Text>
                         </View>
-                        <SupportButton />
+                        <Text
+                            style={{
+                                alignSelf: 'center',
+                                color: Style.getColor('primary-text2'),
+                                marginBottom: 8,
+                            }}>
+                            {__DEV__ && 'DEV BUILD\t'}
+                            {devMode && 'DEV MODE\t'}
+                            {'v' + require(`../../../app.json`).expo.version}
+                        </Text>
+                        {/* <SupportButton /> */}
                     </View>
                 </Animated.View>
             </View>
