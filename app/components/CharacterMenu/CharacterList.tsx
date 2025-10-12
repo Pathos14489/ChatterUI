@@ -1,10 +1,9 @@
 import { Characters, Logger } from '@globals'
 import { useRouter, Stack, usePathname } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView, TextInput, View, StyleSheet } from 'react-native'
+import { SafeAreaView, ScrollView, TextInput, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { runOnJS } from 'react-native-reanimated'
-import { Style } from '@globals'
 
 import CharacterListing from './CharacterListing'
 import CharacterNewMenu from './CharacterNewMenu'
@@ -67,17 +66,17 @@ const CharacterList = () => {
                     }}
                 />
                 {/* Search Bar */}
-                <View style={styles.searchBox}>
+                <View style={{ marginVertical: 12 }}>
                     <TextInput
                         placeholder="Search characters..."
-                    style={styles.searchInput}
-                    value={searchText}
-                    onChangeText={setSearchText}
-                    />
-                    <FontAwesome
-                        name="search"
-                        size={15}
-                        color={Style.getColor('primary-text1')}
+                        value={searchText}
+                        onChangeText={setSearchText}
+                        style={{
+                            backgroundColor: '#f0f0f0',
+                            borderRadius: 8,
+                            padding: 10,
+                            fontSize: 16,
+                        }}
                     />
                 </View>
                 {filteredCharacters.length === 0 && <CharactersEmpty />}
@@ -98,22 +97,5 @@ const CharacterList = () => {
         </GestureDetector>
     )
 }
-
-const styles = StyleSheet.create({
-    searchBox: {
-        flex: 1,
-        borderRadius: 16,
-        backgroundColor: Style.getColor('primary-surface2'),
-        padding: 8,
-        color: Style.getColor('primary-text1'),
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
-    searchInput: {
-        flex: 1,
-        color: Style.getColor('primary-text1'),
-    }
-})
 
 export default CharacterList
